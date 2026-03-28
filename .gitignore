@@ -1,0 +1,6 @@
+*.o
+*.d
+kernel.bin
+kernel.o
+loader.bin
+build/
