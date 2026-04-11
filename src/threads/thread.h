@@ -88,10 +88,18 @@ struct thread
     char name[16];                      /* Name (for debugging purposes). */
     uint8_t *stack;                     /* Saved stack pointer. */
     int priority;                       /* Priority. */
+    int base_priority;                  /* Save the original priority before being donation. */
+    struct list donations;              /* A list of threads that gave me donation. */
+    struct lock *wait_on_lock;          /* The rock I'm currently waiting for. */
     struct list_elem allelem;           /* List element for all threads list. */
     int64_t wake_tick;
+    int nice;                          /* nice value (-20 ~ 20) */
+    int recent_cpu;                    /* recent CPU usage (fixed-point) */  
+
     /* Shared between thread.c and synch.c. */
+
     struct list_elem elem;              /* List element. */
+    struct list_elem donation_elem;     /* Elem to get into the donations list. */
 
 #ifdef USERPROG
     /* Owned by userprog/process.c. */
